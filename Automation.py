@@ -33,21 +33,16 @@ class Automations:
             pass
 
         # define watermark name
-        wmName = Automations.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input[id$='Name']")))
-        wmName[0].clear()
-        wmName[0].send_keys(name)
+        wmNameElem = Automations.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input[id$='Name']")))
+        wmNameElem[0].send_keys(name)
 
-        #
-        wmText = Automations.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "input[placeholder='e.g. Unlocked by John Smith']")))
-        wmText[0].clear()
-        wmText[0].send_keys(wmText)
+        # define watearmark text
+        wmTextElem = Automations.wait.until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='e.g. Unlocked by John Smith']")))
+        wmTextElem.send_keys(wmText)
 
-
-
-
-
-
-
+        # Save and Exit
+        saveBtn = Automations.wait.until(EC.presence_of_element_located((By.XPATH, "//button[@data-action='save']")))
+        saveBtn.click()
 
 if __name__ == "__main__":
     RunAutomation = Automations()
@@ -55,15 +50,15 @@ if __name__ == "__main__":
 
     # Create User Spcific watermarks
     RunAutomation.addWatermarks('us', 'Test User ID', '_userId_')
-    # RunAutomation.addWatermarks('us', 'Test User Name')
-    # RunAutomation.addWatermarks('us', 'Test Date')
-    # RunAutomation.addWatermarks('us', 'Test Time')
-    # RunAutomation.addWatermarks('us', 'Test Document Code')
-    # RunAutomation.addWatermarks('us', 'Test Computer ID')
-    # RunAutomation.addWatermarks('us', 'Test New Line')
-    # RunAutomation.addWatermarks('us', 'Test User Custom Field')
-    # RunAutomation.addWatermarks('us', 'Test User External Key')
-    # RunAutomation.addWatermarks('us', 'Test Unique Open ID')
+    RunAutomation.addWatermarks('us', 'Test User Name', '_userName_')
+    RunAutomation.addWatermarks('us', 'Test Date', '_date_')
+    RunAutomation.addWatermarks('us', 'Test Time', '_time_')
+    RunAutomation.addWatermarks('us', 'Test Document Code', '_docCode_')
+    RunAutomation.addWatermarks('us', 'Test Computer ID', '_computerId_')
+    RunAutomation.addWatermarks('us', 'Test New Line', '_newLine_')
+    RunAutomation.addWatermarks('us', 'Test User Custom Field', '_readerCustomField_')
+    RunAutomation.addWatermarks('us', 'Test User External Key', '_readerExternalKey_')
+    RunAutomation.addWatermarks('us', 'Test Unique Open ID', '_unique_open_id_')
 
     # Create Text Only Watermark
 

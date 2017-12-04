@@ -18,11 +18,11 @@ class Helpers:
 
         Username = wait.until(EC.presence_of_element_located((By.ID, "username")))
         Username.clear()
-        Username.send_keys("andyw@vitrium.com")
+        Username.send_keys("Ent")
 
         Password = wait.until(EC.presence_of_element_located((By.ID, "password")))
         Password.clear()
-        Password.send_keys("admin")
+        Password.send_keys("test123")
 
         Login = wait.until(EC.presence_of_element_located((By.ID, "login")))
         Login.click()
