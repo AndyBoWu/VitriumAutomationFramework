@@ -70,6 +70,16 @@ class Automations:
             ExpiryDateElem = Automations.wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'date-picker-group')))
             ActionChains(Automations.driver).move_to_element(ExpiryDateElem[0]).click().send_keys(expiryDate).perform()
 
+        # Expiry After First Unlock
+        # if expiryDate == 'Never':
+        #     ExpiryDateElem = Automations.wait.until(
+        #         EC.presence_of_all_elements_located((By.XPATH, "//*[contains(@name, 'ExpiryF')]")))
+        #     ExpiryDateElem[1].click()
+        # elif expiryDate != 'Not Set':
+        #     ExpiryDateElem = Automations.wait.until(
+        #         EC.presence_of_all_elements_located((By.CLASS_NAME, 'date-picker-group')))
+        #     ActionChains(Automations.driver).move_to_element(ExpiryDateElem[0]).click().send_keys(
+        #         expiryDate).perform()
 
 
 
@@ -87,6 +97,7 @@ class Automations:
 
 if __name__ == "__main__":
 
+    # Tomorrow
     tomorrow = datetime.datetime.strptime(str(datetime.date.today() + timedelta(days=1)), '%Y-%m-%d').strftime('%m/%d/%Y')
     print(tomorrow)
 
