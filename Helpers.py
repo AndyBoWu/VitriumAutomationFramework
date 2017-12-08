@@ -18,7 +18,7 @@ class Helpers:
 
         Username = wait.until(EC.presence_of_element_located((By.ID, "username")))
         Username.clear()
-        Username.send_keys("Ent")
+        Username.send_keys("Enter")
 
         Password = wait.until(EC.presence_of_element_located((By.ID, "password")))
         Password.clear()
