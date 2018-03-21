@@ -14,6 +14,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from Helpers import Helpers
 from Variables import VariableClass as V
 
+import pyautogui
+
 class Automations:
 
     chromedriver = r"C:\Users\andyw\Dropbox\Learning\Automation\ui\chromedriver"
@@ -27,6 +29,48 @@ class Automations:
 
     def __init__(self):
         pass
+
+    # Add an account
+    def AddAccount(self, AccountName, AccountType, EnableDownloadPrint):
+        print("...Adding a " + AccountName + " Account...")
+
+        chromedriver = r"C:\Users\andyw\Dropbox\Learning\Automation\ui\chromedriver"
+        os.environ["webdriver.chrome.driver"] = chromedriver
+        driver = webdriver.Chrome(chromedriver)
+
+        h = Helpers()
+        h.userLogin(driver, 'admin')
+        driver.maximize_window()
+        self.wait = WebDriverWait(driver, 20)
+
+        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, V.addAccountBtn))).click()
+
+        # Account Name
+        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[id$='Name']"))).send_keys(AccountName)
+
+        # EIP URL
+        selectEipUrl = Select(self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "select[id$='EipUrl']"))))
+        selectEipUrl.select_by_visible_text("Custom URL")
+
+        # Account Type
+        selectAccountType = Select(self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "select[id$='AccountType']"))))
+        if AccountType == "Ent":
+            selectAccountType.select_by_visible_text("Enterprise Edition")
+        elif AccountType == "Pro":
+            selectAccountType.select_by_visible_text("Pro Edition")
+        elif AccountType == "Std":
+            selectAccountType.select_by_visible_text("Standard Edition")
+
+        # Custom EIP URL
+        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[id$='CustomUrl']"))).send_keys(V.CustomEipUrl)
+
+        # Enable Download to Print
+        if EnableDownloadPrint:
+            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input[id$='DownloadToPrintEnabled']"))).click()
+
+        time.sleep(1)
+        self.wait.until(EC.presence_of_element_located((By.XPATH, V.saveBtn))).click()
+        print("...Successful!!\n")
 
     # ADD WATERMARKS
     def addWatermarks(self, wmType, name, wmText, placement):
@@ -284,6 +328,21 @@ class Automations:
         time.sleep(2)
         Automations.wait.until(EC.presence_of_element_located((By.XPATH, V.saveBtn))).click()
 
+    # Protect a content
+    def protectContent(self, FilePath):
+        Automations.driver.get(V.contentUrl)
+        Automations.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, V.addContentBtn))).click()
+        time.sleep(2)
+        Automations.wait.until(EC.presence_of_element_located((By.XPATH, V.uploadContentBtn))).click()
+
+        time.sleep(1)
+        pyautogui.typewrite(FilePath)
+        time.sleep(1)
+        pyautogui.keyDown('enter')
+        time.sleep(1)
+
+        Automations.wait.until(EC.presence_of_element_located((By.XPATH, V.saveBtn))).click()
+        time.sleep(1)
 
 if __name__ == "__main__":
 
@@ -293,7 +352,31 @@ if __name__ == "__main__":
 
     RunAutomation = Automations()
 
-    # Create a DRM policy
+    # STEP 1 - Create an Enterprise Account
+    # RunAutomation.AddAccount("AndyEnt", "Ent", True)
+    # RunAutomation.AddAccount("AndyPro", "Pro", True)
+    # RunAutomation.AddAccount("AndyStd", "Std", True)
+    # RunAutomation.AddAccount("JsonApi", "Ent", True)
+    # RunAutomation.AddAccount("Inhouse", "Ent", True)
+    # RunAutomation.AddAccount("WvLoginForm", "Ent", True)
+    # RunAutomation.AddAccount("OAUTH2", "Ent", True)
+
+
+
+
+    # [TO-DO] Manually add customer into accounts
+
+
+
+    # Create a Professional Account
+
+    # Create a Standard Account
+
+    # Create a
+
+
+
+    # STEP 2 - Create multiple DRM policies
     # addPolicy(self, policyName, expiryDate, expiryAfterUnlock, offlineAccess, OpenLimit, totalLimit, pdfLimit, browserLimit, webPrint, downloadPrint, accountLimit, ipLimit)
 
     # DRM Policy 1 - Unlimited
@@ -335,20 +418,20 @@ if __name__ == "__main__":
     # RunAutomation.addWatermarks('to', 'Test Text Only Watermark - DOWN', 'HELLO PYTHON - down', 'down')
 
 
-    RunAutomation.addSingleUsers('cs', 'cs', 'Created this user to test case sensitive password feature', '$ValidExternalKey$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Andy', 'Test123', 'Im the KING!!', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Ben', 'Test123', 'MBA Classmate', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Cindy', 'Test123', 'Scream Movie', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Daisy', 'Test123', 'Botanic Garden', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Eli', 'Test123', 'There will be blood!', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Frank', 'Test123', 'Everybody Loves Raymond!', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Grace', 'Test123', 'Saving Grace!', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('Hellen', 'Test123', 'Godness', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('To Be Deleted Later 1', 'Test123', 'Saving Grace!', '$Brain$', 'This is the info located in the custom field')
-    RunAutomation.addSingleUsers('To Be Deleted Later 2', 'Test123', 'Godness', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('cs', 'cs', 'Created this user to test case sensitive password feature', '$ValidExternalKey$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Andy', 'Test123', 'Im the KING!!', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Ben', 'Test123', 'MBA Classmate', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Cindy', 'Test123', 'Scream Movie', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Daisy', 'Test123', 'Botanic Garden', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Eli', 'Test123', 'There will be blood!', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Frank', 'Test123', 'Everybody Loves Raymond!', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Grace', 'Test123', 'Saving Grace!', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Hellen', 'Test123', 'Godness', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('To Be Deleted Later 1', 'Test123', 'Saving Grace!', '$Brain$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('To Be Deleted Later 2', 'Test123', 'Godness', '$Brain$', 'This is the info located in the custom field')
 
     # Add Multiple Users
-    RunAutomation.addMultipleUsers('mAndy', 'Test123', 'mBen', 'Test123', 'mCindy', 'Test123', 'mDaisy', 'Test123', 'mEli', 'Test123', 'mFrank', 'Test123')
+    # RunAutomation.addMultipleUsers('mAndy', 'Test123', 'mBen', 'Test123', 'mCindy', 'Test123', 'mDaisy', 'Test123', 'mEli', 'Test123', 'mFrank', 'Test123')
 
     # Create Content Setting
     # (csType, name, allowPrinting, allowCP, selectWatermark, disableAnnotation, casePassword)
@@ -358,3 +441,35 @@ if __name__ == "__main__":
     # def addSingleUsers(self, name, password, notes, externalKey, customField):
 
     # Add GROUPS
+
+    RunAutomation.protectContent(r"F:\Content\PDF\Test_PDF_File.pdf")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\WORD\Word2003Doc.doc")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\WORD\Word2016Docx.docx")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\Excel\Excel2003Xls.xls")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\Excel\Excel2013Xlsx.xlsx")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\PPT\PPT2003.ppt")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\PPT\PPTX2013.pptx")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\image\SYJH.jpg")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\image\PNG.png")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\image\BMP.bmp")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\image\Gif.gif")
+    time.sleep(1)
+    RunAutomation.protectContent(r"F:\Content\image\TIFF.tif")
+
+
+
+
+
+
+
+

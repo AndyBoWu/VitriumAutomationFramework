@@ -24,6 +24,7 @@ class VariableClass:
 
 
     # Jump to different places
+    contentUrl          = r"http://auth-staging.vitrium.com/secure/documents"
     stagingUrl          = r"http://auth-staging.vitrium.com/"
     policyUrl           = r"http://auth-staging.vitrium.com/secure/sharesettings"
     dashboardUrl        = r"http://auth-staging.vitrium.com/secure/dashboard"
@@ -32,6 +33,11 @@ class VariableClass:
     contentSettingsUrl  = r"http://auth-staging.vitrium.com/secure/documentsettings"
     usersUrl            = r"http://auth-staging.vitrium.com/secure/readers"
     loginFormUrl        = r"http://auth-staging.vitrium.com/secure/forms"
+
+
+    # Content Tab
+    addContentBtn       = r"button[data-bound-action='add-document']"
+    uploadContentBtn     = r"//*[@title='Browse local file system ...']"
 
 
     # DRM Policy
