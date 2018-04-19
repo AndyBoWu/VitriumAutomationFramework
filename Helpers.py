@@ -20,10 +20,10 @@ class Helpers:
         driver.get(V.stagingUrl)
 
         Username = wait.until(EC.presence_of_element_located((By.ID, "username")))
-        Username.clear()
+        # Username.clear()
 
         Password = wait.until(EC.presence_of_element_located((By.ID, "password")))
-        Password.clear()
+        # Password.clear()
 
         if type == 'user':
             Password.send_keys(V.passWord)

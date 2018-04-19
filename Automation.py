@@ -18,12 +18,12 @@ import pyautogui
 
 class Automations:
 
-    chromedriver = r"C:\Users\andyw\Dropbox\Learning\Automation\ui\chromedriver"
+    chromedriver = r"F:\software\chromedriver"
     os.environ["webdriver.chrome.driver"] = chromedriver
     driver = webdriver.Chrome(chromedriver)
 
     h = Helpers()
-    h.userLogin(driver, 'user')
+    h.userLogin(driver, 'admin')
     driver.maximize_window()
     wait = WebDriverWait(driver, 20)
 
@@ -34,7 +34,7 @@ class Automations:
     def AddAccount(self, AccountName, AccountType, EnableDownloadPrint):
         print("...Adding a " + AccountName + " Account...")
 
-        chromedriver = r"C:\Users\andyw\Dropbox\Learning\Automation\ui\chromedriver"
+        chromedriver = r"F:\software\chromedriver"
         os.environ["webdriver.chrome.driver"] = chromedriver
         driver = webdriver.Chrome(chromedriver)
 
@@ -240,7 +240,7 @@ class Automations:
 
         # Select Login Form
         selectLoginForm = Select(Automations.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "select[id$='FormId']"))))
-        selectLoginForm.select_by_visible_text("new-login")
+        # selectLoginForm.select_by_visible_text("new-login")
 
 
         # Select first watermark
@@ -332,14 +332,14 @@ class Automations:
     def protectContent(self, FilePath):
         Automations.driver.get(V.contentUrl)
         Automations.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, V.addContentBtn))).click()
-        time.sleep(2)
+        time.sleep(3)
         Automations.wait.until(EC.presence_of_element_located((By.XPATH, V.uploadContentBtn))).click()
 
         time.sleep(1)
         pyautogui.typewrite(FilePath)
         time.sleep(1)
         pyautogui.keyDown('enter')
-        time.sleep(1)
+        time.sleep(2)
 
         Automations.wait.until(EC.presence_of_element_located((By.XPATH, V.saveBtn))).click()
         time.sleep(1)
@@ -352,7 +352,13 @@ if __name__ == "__main__":
 
     RunAutomation = Automations()
 
-    # STEP 1 - Create an Enterprise Account
+    # STEP 1 - create account
+    """
+        TO-DO: 
+            1. Change the default account type to "PAID" account
+            2. Add one or two trial accounts
+    """
+
     # RunAutomation.AddAccount("AndyEnt", "Ent", True)
     # RunAutomation.AddAccount("AndyPro", "Pro", True)
     # RunAutomation.AddAccount("AndyStd", "Std", True)
@@ -360,7 +366,8 @@ if __name__ == "__main__":
     # RunAutomation.AddAccount("Inhouse", "Ent", True)
     # RunAutomation.AddAccount("WvLoginForm", "Ent", True)
     # RunAutomation.AddAccount("OAUTH2", "Ent", True)
-
+    # RunAutomation.AddAccount("TrialA", "Pro", True)
+    # RunAutomation.AddAccount("TrialB", "Pro", True)
 
 
 
@@ -372,24 +379,22 @@ if __name__ == "__main__":
 
     # Create a Standard Account
 
-    # Create a
 
 
 
-    # STEP 2 - Create multiple DRM policies
-    # addPolicy(self, policyName, expiryDate, expiryAfterUnlock, offlineAccess, OpenLimit, totalLimit, pdfLimit, browserLimit, webPrint, downloadPrint, accountLimit, ipLimit)
+    #STEP 2 - Create multiple DRM policies
+    #addPolicy(self, policyName, expiryDate, expiryAfterUnlock, offlineAccess, OpenLimit, totalLimit, pdfLimit, browserLimit, webPrint, downloadPrint, accountLimit, ipLimit)
 
-    # DRM Policy 1 - Unlimited
+    # # DRM Policy 1 - Unlimited
     # RunAutomation.addPolicy('Unlimited', 'Never', 'Never', 'Never', 'Never', 'Never', 'NA', 'NA', 'Never', 'Never', 'Never', 'Never')
-
-    # DRM Policy 2 - Web Print : 2; Download Print : 3
+    #
+    # # DRM Policy 2 - Web Print : 2; Download Print : 3
     # RunAutomation.addPolicy('Print - Web2 - Download3', 'Never', 'Never', 'Never', 'Never', 'Never', 'NA', 'NA', '2', '3', 'Never', 'Never')
-
-
-    # DRM Policy - No Offline Access
+    #
+    # # DRM Policy - No Offline Access
     # RunAutomation.addPolicy('No Offline Access', 'Never', 'Never', 'Not Set', 'Never', 'Never', 'NA', 'NA', '2', '3', 'Never', 'Never')
-
-    # DRM Policy 3 - PDF_1 - Web_1
+    #
+    # # DRM Policy 3 - PDF_1 - Web_1
     # RunAutomation.addPolicy('PDF_1 - Web_1', 'Never', 'Never', 'Never', 'Never', 'NA', '1', '1', '2','3', 'Never', 'Never')
 
     # DRM Policy 4 -
@@ -412,13 +417,14 @@ if __name__ == "__main__":
     # RunAutomation.addWatermarks('us', 'Test DELETE watermark', 'THIS WATERMARK WILL BE DELETED!', 'bc')
     # RunAutomation.addWatermarks('us', 'Test DELETE watermark2', 'THIS WATERMARK WILL BE DELETED!', 'bc')
     #
+    #
     # # Create Text Only Watermark
     # RunAutomation.addWatermarks('to', 'Test Text Only Watermark - CENTER', 'HELLO PYTHON - center', 'center')
     # RunAutomation.addWatermarks('to', 'Test Text Only Watermark - UP', 'HELLO PYTHON - up', 'up')
     # RunAutomation.addWatermarks('to', 'Test Text Only Watermark - DOWN', 'HELLO PYTHON - down', 'down')
+    #
 
-
-    # RunAutomation.addSingleUsers('cs', 'cs', 'Created this user to test case sensitive password feature', '$ValidExternalKey$', 'This is the info located in the custom field')
+    # RunAutomation.addSingleUsers('Case', 'Case', 'Created this user to test case sensitive password feature', '$ValidExternalKey$', 'This is the info located in the custom field')
     # RunAutomation.addSingleUsers('Andy', 'Test123', 'Im the KING!!', '$Brain$', 'This is the info located in the custom field')
     # RunAutomation.addSingleUsers('Ben', 'Test123', 'MBA Classmate', '$Brain$', 'This is the info located in the custom field')
     # RunAutomation.addSingleUsers('Cindy', 'Test123', 'Scream Movie', '$Brain$', 'This is the info located in the custom field')
@@ -429,42 +435,40 @@ if __name__ == "__main__":
     # RunAutomation.addSingleUsers('Hellen', 'Test123', 'Godness', '$Brain$', 'This is the info located in the custom field')
     # RunAutomation.addSingleUsers('To Be Deleted Later 1', 'Test123', 'Saving Grace!', '$Brain$', 'This is the info located in the custom field')
     # RunAutomation.addSingleUsers('To Be Deleted Later 2', 'Test123', 'Godness', '$Brain$', 'This is the info located in the custom field')
-
-    # Add Multiple Users
+    #
+    #
+    # # Add Multiple Users
     # RunAutomation.addMultipleUsers('mAndy', 'Test123', 'mBen', 'Test123', 'mCindy', 'Test123', 'mDaisy', 'Test123', 'mEli', 'Test123', 'mFrank', 'Test123')
 
     # Create Content Setting
     # (csType, name, allowPrinting, allowCP, selectWatermark, disableAnnotation, casePassword)
     # RunAutomation.addContentSettings('full', 'Full', 'true', 'true', 'Test Computer ID', 'false', 'true')
 
-    # Add Single User
-    # def addSingleUsers(self, name, password, notes, externalKey, customField):
-
     # Add GROUPS
 
-    RunAutomation.protectContent(r"F:\Content\PDF\Test_PDF_File.pdf")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\WORD\Word2003Doc.doc")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\WORD\Word2016Docx.docx")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\Excel\Excel2003Xls.xls")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\Excel\Excel2013Xlsx.xlsx")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\PPT\PPT2003.ppt")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\PPT\PPTX2013.pptx")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\image\SYJH.jpg")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\image\PNG.png")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\image\BMP.bmp")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\image\Gif.gif")
-    time.sleep(1)
-    RunAutomation.protectContent(r"F:\Content\image\TIFF.tif")
+    # RunAutomation.protectContent(r"F:\Content\PDF\Test_PDF_File.pdf")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\WORD\Word2003Doc.doc")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\WORD\Word2016Docx.docx")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\Excel\Excel2003Xls.xls")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\Excel\Excel2013Xlsx.xlsx")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\PPT\PPT2003.ppt")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\PPT\PPTX2013.pptx")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\image\SYJH.jpg")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\image\PNG.png")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\image\BMP.bmp")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\image\Gif.gif")
+    # time.sleep(1)
+    # RunAutomation.protectContent(r"F:\Content\image\TIFF.tif")
 
 
 
